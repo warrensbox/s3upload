@@ -21,11 +21,13 @@ import (
 * 3- Check directories from confif file
  */
 
+//TODO get boolean, ski[ base dir if requested]
 var version = "0.1.0\n"
 
 var (
 	versionFlag *bool
 	helpFlag    *bool
+	skipBase    *bool
 	awsRegion   *string
 	directory   *string
 	bucket      *string
@@ -35,12 +37,16 @@ var (
 func init() {
 
 	const (
-		awsRegionDesc = "Provide AWS Region. Default is us-east-1"
-		directoryDesc = "Directory where files are stored. Default is current directory"
-		bucketDesc    = "S3 bucket. Defaults are in config file"
-		keyDesc       = "S3 key. Defaults are in config file"
+		versionFlagDesc = "Displays the version of s3-pusher"
+		skipBaseDesc    = "Skip base directory"
+		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
+		directoryDesc   = "Directory where files are stored. Default is current directory"
+		bucketDesc      = "S3 bucket. Defaults are in config file"
+		keyDesc         = "S3 key. Defaults are in config file"
 	)
 
+	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
+	skipBase = kingpin.Flag("skipBase", skipBaseDesc).Short('o').Bool()
 	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
@@ -49,12 +55,18 @@ func init() {
 
 func main() {
 
+	kingpin.CommandLine.Interspersed(false)
+	kingpin.Parse()
+
 	config := &aws.Config{Region: aws.String(*awsRegion)}
 
 	session := session.Must(session.NewSession(config))
 
 	construct := &lib.Constructor{session, *directory, *bucket, *key}
 	profile, _ := lib.NewConstructor(construct)
+
+	// fmt.Println(*directory)
+	//os.Exit(0)
 
 	err := profile.PushToS3()
 

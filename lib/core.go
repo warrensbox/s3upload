@@ -22,7 +22,7 @@ func NewConstructor(attr *Constructor) (*Constructor, error) {
 	}
 
 	if attr.Directory == "" {
-		attr.Directory = "./test/"
+		attr.Directory = "./"
 	}
 
 	if attr.MyBucket == "" {
