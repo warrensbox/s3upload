@@ -27,7 +27,7 @@ var version = "0.1.0\n"
 var (
 	versionFlag *bool
 	helpFlag    *bool
-	skipBase    *bool
+	includeBase *bool
 	awsRegion   *string
 	directory   *string
 	bucket      *string
@@ -46,7 +46,7 @@ func init() {
 	)
 
 	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
-	skipBase = kingpin.Flag("skipBase", skipBaseDesc).Short('o').Bool()
+	includeBase = kingpin.Flag("ignoreBase", skipBaseDesc).Short('i').Bool()
 	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
@@ -62,11 +62,8 @@ func main() {
 
 	session := session.Must(session.NewSession(config))
 
-	construct := &lib.Constructor{session, *directory, *bucket, *key}
+	construct := &lib.Constructor{session, *directory, *bucket, *key, *includeBase}
 	profile, _ := lib.NewConstructor(construct)
-
-	// fmt.Println(*directory)
-	//os.Exit(0)
 
 	err := profile.PushToS3()
 

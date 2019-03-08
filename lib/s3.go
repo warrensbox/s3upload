@@ -7,10 +7,13 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
+
+var wg = sync.WaitGroup{}
 
 func (id *Constructor) PushToS3() error {
 
@@ -22,39 +25,60 @@ func (id *Constructor) PushToS3() error {
 	if err != nil {
 		panic(err)
 	}
+	ch := make(chan string)
 
 	for _, fil := range files {
-
-		fmt.Printf("fil %s\n", fil)
+		wg.Add(1)
 		file, err := os.Open(fil)
 		if err != nil {
 			return err
 		}
 		//defer file.Close()
 
-		run := before(fil, "/")
+		fmt.Printf("Files %s\n", fil)
 
-		fmt.Printf("run %s\n", run)
+		if !id.IncludeBase {
+			fil = removeBaseDir(fil, "/")
+		}
+
+		go pushingToS3(file, uploader, id.MyBucket, fil, ch)
+
+		// go func() {
+		// 	pushingToS3(file, uploader, id.MyBucket, fil)
+		// 	wg.Done()
+		// }()
+
+		//fmt.Printf("run %s\n", fil)
 
 		//Get file size and read the file content into a buffer
-		fileInfo, _ := file.Stat()
-		var size int64 = fileInfo.Size()
-		buffer := make([]byte, size)
-		file.Read(buffer)
+		// fileInfo, _ := file.Stat()
+		// size := fileInfo.Size()
+		// buffer := make([]byte, size)
+		// file.Read(buffer)
 
-		//os.Exit(0)
-		// // Upload the file to S3.
-		result, errS3 := uploader.Upload(&s3manager.UploadInput{
-			Bucket: aws.String(id.MyBucket),
-			Key:    aws.String(run),
-			Body:   bytes.NewReader(buffer),
-		})
-		if errS3 != nil {
-			fmt.Printf("failed to upload file, %v", errS3)
-		}
-		fmt.Printf("file uploaded to, %s\n", result.Location)
+		// // // Upload the file to S3.
+		// result, errS3 := uploader.Upload(&s3manager.UploadInput{
+		// 	Bucket: aws.String(id.MyBucket),
+		// 	Key:    aws.String(fil),
+		// 	Body:   bytes.NewReader(buffer),
+		// })
+		// if errS3 != nil {
+		// 	fmt.Printf("failed to upload file, %v", errS3)
+		// }
+		// fmt.Printf("file uploaded to, %s\n", result.Location)
 
 	}
+
+	go func(ch chan<- string) {
+		defer close(ch)
+		wg.Wait()
+	}(ch)
+
+	for i := range ch {
+		fmt.Println(i)
+	}
+
+	wg.Wait()
 
 	return nil
 }
@@ -72,11 +96,34 @@ func visit(files *[]string) filepath.WalkFunc {
 	}
 }
 
-func before(value string, a string) string {
+func removeBaseDir(value string, a string) string {
 	// Get substring before a string.
 	pos := strings.Index(value, a)
 	if pos == -1 {
 		return ""
 	}
 	return value[pos+1:]
+}
+
+func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key string, ch chan<- string) {
+	defer wg.Done()
+	defer file.Close()
+	fileInfo, _ := file.Stat()
+	size := fileInfo.Size()
+	buffer := make([]byte, size)
+	file.Read(buffer)
+
+	// // Upload the file to S3.
+	result, errS3 := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(key),
+		Body:   bytes.NewReader(buffer),
+	})
+	if errS3 != nil {
+		fmt.Printf("failed to upload file, %v", errS3)
+	}
+	fmt.Printf("file uploaded to, %s\n", result.Location)
+
+	ch <- "word"
+
 }

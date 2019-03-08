@@ -8,10 +8,11 @@ import (
 
 //Constructor : struct for session
 type Constructor struct {
-	Session   *session.Session
-	Directory string
-	MyBucket  string
-	MyKey     string
+	Session     *session.Session
+	Directory   string
+	MyBucket    string
+	MyKey       string
+	IncludeBase bool
 }
 
 //NewConstructor :validate object
