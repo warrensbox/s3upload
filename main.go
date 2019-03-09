@@ -32,6 +32,7 @@ var (
 	directory   *string
 	bucket      *string
 	key         *string
+	configFile  *string
 )
 
 func init() {
@@ -42,7 +43,8 @@ func init() {
 		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
 		directoryDesc   = "Directory where files are stored. Default is current directory"
 		bucketDesc      = "S3 bucket. Defaults are in config file"
-		keyDesc         = "S3 key. Defaults are in config file"
+		//keyDesc         = "S3 key. Defaults are in config file"
+		confDesc = "S3 config info"
 	)
 
 	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
@@ -50,7 +52,8 @@ func init() {
 	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
-	key = kingpin.Flag("key", keyDesc).Short('k').String()
+	//key = kingpin.Flag("key", keyDesc).Short('k').String()
+	configFile = kingpin.Flag("config", confDesc).Short('c').String()
 }
 
 func main() {
@@ -62,7 +65,7 @@ func main() {
 
 	session := session.Must(session.NewSession(config))
 
-	construct := &lib.Constructor{session, *directory, *bucket, *key, *includeBase}
+	construct := &lib.Constructor{session, *directory, *bucket, *includeBase, *configFile}
 	profile, _ := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()

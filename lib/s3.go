@@ -41,7 +41,7 @@ func (id *Constructor) PushToS3() error {
 			fil = removeBaseDir(fil, "/")
 		}
 
-		go pushingToS3(file, uploader, id.MyBucket, fil, ch)
+		go pushingToS3(file, uploader, id.Bucket, fil, ch)
 
 		// go func() {
 		// 	pushingToS3(file, uploader, id.MyBucket, fil)

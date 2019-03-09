@@ -1,0 +1,4 @@
+{
+    "source": "test",
+    "bucket": "simple.s3.uploader"
+}
