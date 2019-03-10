@@ -25,14 +25,15 @@ import (
 var version = "0.1.0\n"
 
 var (
-	versionFlag *bool
-	helpFlag    *bool
-	includeBase *bool
-	awsRegion   *string
-	directory   *string
-	bucket      *string
-	key         *string
-	configFile  *string
+	versionFlag  *bool
+	helpFlag     *bool
+	includeBase  *bool
+	awsRegion    *string
+	directory    *string
+	bucket       *string
+	key          *string
+	configFile   *string
+	excludeFiles *string
 )
 
 func init() {
@@ -54,6 +55,7 @@ func init() {
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
 	//key = kingpin.Flag("key", keyDesc).Short('k').String()
 	configFile = kingpin.Flag("config", confDesc).Short('c').String()
+	excludeFiles = kingpin.Flag("exclude", confDesc).Short('e').String()
 }
 
 func main() {
@@ -65,7 +67,7 @@ func main() {
 
 	session := session.Must(session.NewSession(config))
 
-	construct := &lib.Constructor{session, *directory, *bucket, *includeBase, *configFile}
+	construct := &lib.Constructor{session, *directory, *bucket, *includeBase, *configFile, *excludeFiles}
 	profile, _ := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()

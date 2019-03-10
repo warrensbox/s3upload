@@ -1,4 +1,5 @@
 {
     "source": "test",
-    "bucket": "simple.s3.uploader"
+    "bucket": "simple.s3.uploader",
+    "exclude": "main,README.md"
 }

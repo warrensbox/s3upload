@@ -18,17 +18,16 @@ type Constructor struct {
 	//	MyKey       string
 	IncludeBase bool
 	ConfigFile  string
+	Exclude     string
 }
 
 //NewConstructor :validate object
 func NewConstructor(attr *Constructor) (*Constructor, error) {
 
-	fmt.Printf("ddd: %s\n", attr.Directory)
-
 	if attr.ConfigFile != "" {
 		exists, _ := exists(attr.ConfigFile)
 		if exists {
-			fmt.Println("1")
+			fmt.Println("Reading from custom s3config file")
 			dir, basename := filepath.Split(attr.ConfigFile)
 			filename := strings.TrimSuffix(basename, filepath.Ext(basename))
 			attr = configuration(attr, filename, dir)
@@ -39,7 +38,7 @@ func NewConstructor(attr *Constructor) (*Constructor, error) {
 	} else {
 		exists, _ := exists("./s3config.json")
 		if exists {
-			fmt.Println("2")
+			fmt.Println("Reading from local s3config file")
 			attr = configuration(attr, "s3config", "./")
 		}
 	}
@@ -58,9 +57,16 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 		//panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
 
+	if attr.Exclude == "" {
+		exclude := viper.Get("exclude")
+		if exclude != nil {
+			attr.Exclude = exclude.(string)
+		}
+	}
+
 	if attr.Directory == "" {
 		directory := viper.Get("source")
-		if directory == "" {
+		if directory != nil {
 			attr.Directory = directory.(string)
 		} else {
 			attr.Directory = "./"
@@ -71,7 +77,7 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 
 	if attr.Bucket == "" {
 		bucket := viper.Get("bucket")
-		if bucket != "" {
+		if bucket != nil {
 			attr.Bucket = bucket.(string)
 		} else {
 			fmt.Println("You must provide a S3 bucket")
@@ -81,15 +87,4 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 
 	return attr
 
-}
-
-func exists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return true, err
 }
