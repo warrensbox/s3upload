@@ -6,16 +6,17 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	session "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/spf13/viper"
 )
 
 //Constructor : struct for session
 type Constructor struct {
-	Session   *session.Session
-	Directory string
-	Bucket    string
-	//	MyKey       string
+	Session     *session.Session
+	Directory   string
+	Bucket      string
 	IncludeBase bool
 	ConfigFile  string
 	Exclude     string
@@ -47,6 +48,7 @@ func NewConstructor(attr *Constructor) (*Constructor, error) {
 }
 
 func configuration(attr *Constructor, filename string, dirpath string) *Constructor {
+
 	viper.SetConfigType("json")
 	viper.SetConfigName(filename)
 	viper.AddConfigPath(dirpath)
@@ -83,6 +85,24 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 			fmt.Println("You must provide a S3 bucket")
 			os.Exit(1)
 		}
+	}
+
+	accessKey := viper.Get("aws_access_key_id")
+	secretAccessKey := viper.Get("aws_secret_access_key")
+	region := viper.Get("aws_region")
+
+	if accessKey != nil && secretAccessKey != nil && region != nil {
+		sess, err := session.NewSession(&aws.Config{
+			Region:      aws.String(region.(string)),
+			Credentials: credentials.NewStaticCredentials(accessKey.(string), secretAccessKey.(string), ""),
+		})
+
+		if err != nil {
+			fmt.Println("Unable to set ssm based on credentional provided")
+			os.Exit(1)
+		}
+
+		attr.Session = sess
 	}
 
 	return attr
