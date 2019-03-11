@@ -21,7 +21,6 @@ import (
 * 3- Check directories from confif file
  */
 
-//TODO get boolean, ski[ base dir if requested]
 var version = "0.1.0\n"
 
 var (

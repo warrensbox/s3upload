@@ -1,0 +1,11 @@
+theme: jekyll-theme-minimal
+#github: [metadata] 
+repository: warrensbox/s3upload
+logo: /assets/img/logo.png
+title: s3upload
+
+show_downloads: true
+
+exclude: [vendor]
+
+#github: [metadata] 
