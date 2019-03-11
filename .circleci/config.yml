@@ -19,6 +19,10 @@ jobs:
             go test -v ./...
             mkdir -p build
             go build -v -o build/s3upload
+      
+      - persist_to_workspace:
+          root: build
+          paths: s3upload
 
   release:
     docker:

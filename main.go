@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
+	session "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/warrensbox/simple-s3-uploader/lib"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
