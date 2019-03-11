@@ -5,7 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	session "github.com/aws/aws-sdk-go/aws/session"
-	"github.com/warrensbox/simple-s3-uploader/lib"
+	lib "github.com/warrensbox/s3upload/lib"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
