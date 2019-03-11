@@ -25,10 +25,10 @@ import (
 var version = "0.1.0\n"
 
 var (
-	versionFlag *bool
-	helpFlag    *bool
-	includeBase *bool
-	//awsRegion    *string
+	versionFlag  *bool
+	helpFlag     *bool
+	includeBase  *bool
+	awsRegion    *string
 	directory    *string
 	bucket       *string
 	key          *string
@@ -41,16 +41,16 @@ func init() {
 	const (
 		versionFlagDesc = "Displays the version of s3-pusher"
 		skipBaseDesc    = "Skip base directory"
-		//	awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
-		directoryDesc = "Directory where files are stored. Default is current directory"
-		bucketDesc    = "S3 bucket. Defaults are in config file"
+		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
+		directoryDesc   = "Directory where files are stored. Default is current directory"
+		bucketDesc      = "S3 bucket. Defaults are in config file"
 		//keyDesc         = "S3 key. Defaults are in config file"
 		confDesc = "S3 config info"
 	)
 
 	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
 	includeBase = kingpin.Flag("ignoreBase", skipBaseDesc).Short('i').Bool()
-	//	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
+	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
 	//key = kingpin.Flag("key", keyDesc).Short('k').String()
