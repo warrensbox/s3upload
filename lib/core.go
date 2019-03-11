@@ -39,7 +39,7 @@ func NewConstructor(attr *Constructor) (*Constructor, error) {
 	} else {
 		exists, _ := exists("./s3config.json")
 		if exists {
-			fmt.Println("Reading from local s3config file")
+			fmt.Println("Reading from local s3config file located in current directory")
 			attr = configuration(attr, "s3config", "./")
 		}
 	}
