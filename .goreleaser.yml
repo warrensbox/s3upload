@@ -45,7 +45,7 @@ brew:
 
   # Caveats for the user of your binary.
   # Default is empty.
-  caveats: "Type 's3upload' on your command line and choose the terragrunt version that you want from the dropdown. This command currently only works on MacOs and Linux"
+  caveats: "Type 's3upload' on your command line and pass -h to see checkout the parameters allowed. This command currently only works on MacOs and Linux"
 
   # Your app's homepage.
   # Default is empty.
@@ -53,7 +53,7 @@ brew:
 
   # Your app's description.
   # Default is empty.
-  description: "The s3upload command lets you switch between terragrunt versions."
+  description: "The s3upload command lets you upload files to s3"
 
   # Setting this will prevent goreleaser to actually try to commit the updated
   # formula - instead, the formula file will be stored on the dist folder only,
@@ -63,7 +63,7 @@ brew:
 
   # Packages that conflict with your package.
   # conflicts:
-  #   - terragrunt
+  #   - s3upload
 
   # So you can `brew test` your formula.
   # Default is empty.

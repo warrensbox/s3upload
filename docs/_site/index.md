@@ -1,4 +1,4 @@
-# Terragrunt Switcher 
+# s3uploader 
 
 The `s3upload` command line tool lets you upload files to s3. 
 You have the option to provide a configuration file with s3 information and directory or provide the information as parameters on the command line.
