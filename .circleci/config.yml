@@ -49,7 +49,6 @@ jobs:
             mkdir -p /home/circleci/bin
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             export PATH="/home/warrensbox/bin:${PATH}"
-            dep ensure
             rm -rf dist
             git config user.email "warren.veerasingam@gmail.com"
             git config user.name "warrensbox"
