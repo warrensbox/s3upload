@@ -43,7 +43,7 @@ Alternatively, you can install the binary from the source [here](https://github.
 
 The most recently selected versions are presented at the top of the dropdown.
 
-### Supply version on command line
+### Use configuration file
 <img align="center" src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/s3upload-v4.gif" alt="drawing" style="width: 480px;"/>
 
 1. You can also supply a configuration file with 
