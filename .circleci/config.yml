@@ -18,6 +18,7 @@ jobs:
             go vet -tests=false ./...
             go test -v ./...
             mkdir -p build
+            export GOPATH=`pwd`
             echo $GOPATH
             go build -v -o build/s3upload
       
