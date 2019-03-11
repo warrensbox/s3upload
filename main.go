@@ -66,7 +66,7 @@ func main() {
 
 	session := session.Must(session.NewSession(config))
 
-	construct := &lib.Constructor{session, *directory, *bucket, *includeBase, *configFile, *excludeFiles}
+	construct := &lib.Constructor{*directory, *bucket, *includeBase, *configFile, *excludeFiles, session}
 	profile, _ := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()

@@ -14,12 +14,12 @@ import (
 
 //Constructor : struct for session
 type Constructor struct {
-	Session     *session.Session
 	Directory   string
 	Bucket      string
 	IncludeBase bool
 	ConfigFile  string
 	Exclude     string
+	Session     *session.Session
 }
 
 //NewConstructor :validate object
