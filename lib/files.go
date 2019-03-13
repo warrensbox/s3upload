@@ -16,8 +16,7 @@ func visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 		}
 
 		if _, ok := exclude[info.Name()]; ok == true {
-			fmt.Println("SKIPPING FILE")
-			fmt.Println(info.Name())
+			fmt.Printf("SKIPPING FILE : %s\n", info.Name())
 			return nil
 		}
 

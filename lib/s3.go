@@ -14,6 +14,7 @@ import (
 
 var wg = sync.WaitGroup{}
 
+// PushToS3 :  Push files to s3
 func (id *Constructor) PushToS3() error {
 
 	uploader := s3manager.NewUploader(id.Session)
@@ -33,21 +34,16 @@ func (id *Constructor) PushToS3() error {
 	}
 	ch := make(chan string)
 
-	for _, fil := range files {
+	for _, doc := range files {
 		wg.Add(1)
-		file, err := os.Open(fil)
+		file, err := os.Open(doc)
 		if err != nil {
 			return err
 		}
-
-		fmt.Printf("Files %s\n", fil)
-
 		if !id.IncludeBase {
-			fil = removeBaseDir(fil, "/")
+			doc = removeBaseDir(doc, "/")
 		}
-
-		go pushingToS3(file, uploader, id.Bucket, fil, ch)
-
+		go pushingToS3(file, uploader, id.Bucket, doc, ch)
 	}
 
 	go func(ch chan<- string) {
@@ -55,8 +51,8 @@ func (id *Constructor) PushToS3() error {
 		wg.Wait()
 	}(ch)
 
-	for i := range ch {
-		fmt.Println(i)
+	for info := range ch {
+		fmt.Println(info)
 	}
 
 	wg.Wait()
@@ -72,18 +68,20 @@ func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key
 	buffer := make([]byte, size)
 	file.Read(buffer)
 
-	//os.Exit(0)
-	// // Upload the file to S3.
+	message := "Uploading " + key
+
+	// Upload the file to S3.
 	result, errS3 := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(bucket),
 		Key:    aws.String(key),
 		Body:   bytes.NewReader(buffer),
 	})
 	if errS3 != nil {
-		fmt.Printf("failed to upload file, %v", errS3)
+		message = fmt.Sprintf("Failed to upload file, %v", errS3)
+	} else {
+		message = fmt.Sprintf("File uploaded to, %s", result.Location)
 	}
-	fmt.Printf("file uploaded to, %s\n", result.Location)
 
-	ch <- "word"
+	ch <- message
 
 }
