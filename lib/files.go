@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
+func Visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 	return func(path string, info os.FileInfo, err error) error {
 
 		if err != nil {

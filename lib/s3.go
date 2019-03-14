@@ -28,7 +28,7 @@ func (id *Constructor) PushToS3() error {
 		set[s] = struct{}{}
 	}
 
-	err := filepath.Walk(id.Directory, visit(&files, set))
+	err := filepath.Walk(id.Directory, Visit(&files, set))
 	if err != nil {
 		panic(err)
 	}
