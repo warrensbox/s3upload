@@ -17,8 +17,10 @@ import (
 /*** OPERATION WORKFLOW ***/
 /*
 * 1- SSM library gets AWS credentials from host machine
-* 2- Makes API call to aws
-* 3- Check directories from confif file
+* 2- Parses command line arguments
+* 3- Checks if default s3config file exist
+* 4- Establishes S3 connection
+* 5- Push files to S3
  */
 
 var version = "0.1.0\n"

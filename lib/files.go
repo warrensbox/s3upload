@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// Visit : walks thru directory path, ignores exclude files and .git directory
 func Visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 	return func(path string, info os.FileInfo, err error) error {
 
@@ -34,6 +35,7 @@ func Visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 	}
 }
 
+// RemoveBaseDir : removes base directory
 func RemoveBaseDir(value string, a string) string {
 	// Get substring before a string.
 	pos := strings.Index(value, a)
@@ -43,6 +45,7 @@ func RemoveBaseDir(value string, a string) string {
 	return value[pos+1:]
 }
 
+// Exists : checks if path exist
 func Exists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
