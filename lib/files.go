@@ -25,11 +25,6 @@ func Visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 			return filepath.SkipDir
 		}
 
-		if filepath.Ext(path) == ".dat" || filepath.Ext(path) == ".exe" {
-			fmt.Println("SKIPPING EXECUTABLES")
-			return nil
-		}
-
 		if info.IsDir() {
 			return nil
 		}
