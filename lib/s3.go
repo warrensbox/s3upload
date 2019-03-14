@@ -41,7 +41,7 @@ func (id *Constructor) PushToS3() error {
 			return err
 		}
 		if !id.IncludeBase {
-			doc = removeBaseDir(doc, "/")
+			doc = RemoveBaseDir(doc, "/")
 		}
 		go pushingToS3(file, uploader, id.Bucket, doc, ch)
 	}

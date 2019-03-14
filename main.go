@@ -65,10 +65,12 @@ func main() {
 	session := session.Must(session.NewSession(config))
 
 	construct := &lib.Constructor{*directory, *bucket, *includeBase, *configFile, *excludeFiles, session}
-	profile, _ := lib.NewConstructor(construct)
+	profile := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()
 
-	fmt.Print(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 }
