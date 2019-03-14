@@ -49,6 +49,15 @@ The most recently selected versions are presented at the top of the dropdown.
 1. You can also supply a configuration file with 
 2. For example, `s3upload -c locationOfConfigFile`. If you do not provide a config file, s3upload will look at the current directory.
 
+#### Sample config file
+Config json file should be named `s3config.json` and be placed in the root directory if you want `s3upload` to read the default conifg
+```json
+{
+    "source": "test",
+    "bucket": "simple.s3.uploader",
+    "exclude": "main,README.md"
+}
+```
 <hr>
 
 ## Issues

@@ -17,8 +17,10 @@ import (
 /*** OPERATION WORKFLOW ***/
 /*
 * 1- SSM library gets AWS credentials from host machine
-* 2- Makes API call to aws
-* 3- Check directories from confif file
+* 2- Parses command line arguments
+* 3- Checks if default s3config file exist
+* 4- Establishes S3 connection
+* 5- Push files to S3
  */
 
 var version = "0.1.0\n"
@@ -43,8 +45,7 @@ func init() {
 		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
 		directoryDesc   = "Directory where files are stored. Default is current directory"
 		bucketDesc      = "S3 bucket. Defaults are in config file"
-		//keyDesc         = "S3 key. Defaults are in config file"
-		confDesc = "S3 config info"
+		confDesc        = "S3 config info"
 	)
 
 	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
@@ -52,7 +53,6 @@ func init() {
 	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
-	//key = kingpin.Flag("key", keyDesc).Short('k').String()
 	configFile = kingpin.Flag("config", confDesc).Short('c').String()
 	excludeFiles = kingpin.Flag("exclude", confDesc).Short('e').String()
 }
@@ -67,10 +67,12 @@ func main() {
 	session := session.Must(session.NewSession(config))
 
 	construct := &lib.Constructor{*directory, *bucket, *includeBase, *configFile, *excludeFiles, session}
-	profile, _ := lib.NewConstructor(construct)
+	profile := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()
 
-	fmt.Print(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 }

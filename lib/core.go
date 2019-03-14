@@ -23,10 +23,14 @@ type Constructor struct {
 }
 
 //NewConstructor :validate object
-func NewConstructor(attr *Constructor) (*Constructor, error) {
+func NewConstructor(attr *Constructor) *Constructor {
 
 	if attr.ConfigFile != "" {
-		exists, _ := exists(attr.ConfigFile)
+		exists, err := Exists(attr.ConfigFile)
+		if err != nil {
+			fmt.Printf("Error reading from custom s3config file %v\n", err)
+		}
+
 		if exists {
 			fmt.Println("Reading from custom s3config file")
 			dir, basename := filepath.Split(attr.ConfigFile)
@@ -35,16 +39,21 @@ func NewConstructor(attr *Constructor) (*Constructor, error) {
 
 		} else {
 			fmt.Println("Cannot find config file")
+			os.Exit(1)
 		}
 	} else {
-		exists, _ := exists("./s3config.json")
+		exists, err := Exists("./s3config.json")
+		if err != nil {
+			fmt.Printf("Error reading from default s3config file %v\n", err)
+		}
+
 		if exists {
 			fmt.Println("Reading from local s3config file located in current directory")
 			attr = configuration(attr, "s3config", "./")
 		}
 	}
 
-	return attr, nil
+	return attr
 }
 
 func configuration(attr *Constructor, filename string, dirpath string) *Constructor {
