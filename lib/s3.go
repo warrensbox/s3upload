@@ -43,6 +43,12 @@ func (id *Constructor) PushToS3() error {
 		if !id.IncludeBase {
 			doc = RemoveBaseDir(doc, "/")
 		}
+
+		if id.AddKey != "" {
+
+			doc = fmt.Sprintf("%s/%s", id.AddKey, doc)
+		}
+
 		go pushingToS3(file, uploader, id.Bucket, doc, ch)
 	}
 

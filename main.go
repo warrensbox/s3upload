@@ -32,7 +32,7 @@ var (
 	awsRegion    *string
 	directory    *string
 	bucket       *string
-	key          *string
+	addkey       *string
 	configFile   *string
 	excludeFiles *string
 )
@@ -45,6 +45,7 @@ func init() {
 		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
 		directoryDesc   = "Directory where files are stored. Default is current directory"
 		bucketDesc      = "S3 bucket. Defaults are in config file"
+		keyDesc         = "Append key to s3 bucket. For example: key/my.files"
 		confDesc        = "S3 config info"
 	)
 
@@ -53,6 +54,7 @@ func init() {
 	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
+	addkey = kingpin.Flag("addkey", keyDesc).Short('k').String()
 	configFile = kingpin.Flag("config", confDesc).Short('c').String()
 	excludeFiles = kingpin.Flag("exclude", confDesc).Short('e').String()
 }
@@ -66,7 +68,7 @@ func main() {
 
 	session := session.Must(session.NewSession(config))
 
-	construct := &lib.Constructor{*directory, *bucket, *includeBase, *configFile, *excludeFiles, session}
+	construct := &lib.Constructor{*directory, *bucket, *addkey, *includeBase, *configFile, *excludeFiles, session}
 	profile := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()
