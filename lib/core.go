@@ -16,6 +16,7 @@ import (
 type Constructor struct {
 	Directory   string
 	Bucket      string
+	AddKey      string
 	IncludeBase bool
 	ConfigFile  string
 	Exclude     string
@@ -93,6 +94,13 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 		} else {
 			fmt.Println("You must provide a S3 bucket")
 			os.Exit(1)
+		}
+	}
+
+	if attr.AddKey == "" {
+		addkey := viper.Get("addkey")
+		if addkey != nil {
+			attr.AddKey = addkey.(string)
 		}
 	}
 
