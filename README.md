@@ -1,6 +1,6 @@
 # s3uploader 
 
-<img align="center" src="https://s3.us-east-2.amazonaws.com/kepler-images/s3upload/logo.png" alt="drawing" style="width: 180px;"/>
+<img style="text-allign:center" src="https://s3.us-east-2.amazonaws.com/kepler-images/s3upload/logo.png" alt="drawing" width="120" height="130"/>
 
 The `s3upload` command line tool lets you upload files to s3. 
 You have the option to provide a configuration file with s3 information and directory or provide the information as parameters on the command line.
