@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 
@@ -40,12 +41,14 @@ func (id *Constructor) PushToS3() error {
 		if err != nil {
 			return err
 		}
-		if !id.IncludeBase && id.Directory != "./" || id.Directory != "." {
+
+		semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
+
+		if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
 			doc = RemoveBaseDir(doc, "/")
 		}
 
 		if id.AddKey != "" {
-
 			doc = fmt.Sprintf("%s/%s", id.AddKey, doc)
 		}
 
