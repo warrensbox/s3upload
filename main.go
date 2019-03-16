@@ -23,7 +23,7 @@ import (
 * 5- Push files to S3
  */
 
-var version = "0.1.0\n"
+var version = "0.1.2\n"
 
 var (
 	versionFlag  *bool
@@ -33,6 +33,7 @@ var (
 	directory    *string
 	bucket       *string
 	addkey       *string
+	acl          *string
 	configFile   *string
 	excludeFiles *string
 )
@@ -46,6 +47,7 @@ func init() {
 		directoryDesc   = "Directory where files are stored. Default is current directory"
 		bucketDesc      = "S3 bucket. Defaults are in config file"
 		keyDesc         = "Append key to s3 bucket. For example: key/my.files"
+		aclDesc         = "S3 acl description"
 		confDesc        = "S3 config info"
 	)
 
@@ -55,6 +57,7 @@ func init() {
 	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
 	addkey = kingpin.Flag("addkey", keyDesc).Short('k').String()
+	acl = kingpin.Flag("acl", keyDesc).Short('a').String()
 	configFile = kingpin.Flag("config", confDesc).Short('c').String()
 	excludeFiles = kingpin.Flag("exclude", confDesc).Short('e').String()
 }
@@ -64,11 +67,15 @@ func main() {
 	kingpin.CommandLine.Interspersed(false)
 	kingpin.Parse()
 
+	if *versionFlag {
+		fmt.Println(version)
+	}
+
 	config := &aws.Config{Region: aws.String(*awsRegion)}
 
 	session := session.Must(session.NewSession(config))
 
-	construct := &lib.Constructor{*directory, *bucket, *addkey, *includeBase, *configFile, *excludeFiles, session}
+	construct := &lib.Constructor{*directory, *bucket, *addkey, *includeBase, *configFile, *excludeFiles, *acl, session}
 	profile := lib.NewConstructor(construct)
 
 	err := profile.PushToS3()

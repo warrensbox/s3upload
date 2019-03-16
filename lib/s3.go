@@ -52,7 +52,9 @@ func (id *Constructor) PushToS3() error {
 			doc = fmt.Sprintf("%s/%s", id.AddKey, doc)
 		}
 
-		go pushingToS3(file, uploader, id.Bucket, doc, ch)
+		ct := getContentType(filepath.Ext(doc))
+
+		go pushingToS3(file, uploader, id.Bucket, doc, id.ACL, ct, ch)
 	}
 
 	go func(ch chan<- string) {
@@ -69,7 +71,65 @@ func (id *Constructor) PushToS3() error {
 	return nil
 }
 
-func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key string, ch chan<- string) {
+func getContentType(name string) string {
+
+	switch name {
+	case ".ai":
+		return "application/postscript"
+	case ".png":
+		return "image/png"
+	case ".jpeg":
+		return "image/jpeg"
+	case ".jpg":
+		return "image/jpeg"
+	case ".gif":
+		return "image/gif"
+	case ".zip":
+		return "application/zip"
+	case ".gzip":
+		return "application/x-gzip"
+	case ".tar.gz":
+		return "application/x-compressed"
+	case ".android":
+		return "application/vnd.android.package-archive"
+	case ".svg":
+		return "image/svg+xml"
+	case ".xml":
+		return "image/svg+xml"
+	case ".txt":
+		return "text/plain"
+	case ".bmp":
+		return "image/bmp"
+	case ".pdf":
+		return "application/pdf"
+	case ".rtf":
+		return "text/rtf"
+	case ".mov":
+		return "video/quicktime"
+	default:
+		return "binary/octet-stream"
+	}
+
+	// 		application/msword
+	// application/pdf
+	// application/vnd.android.package-archive
+	// application/x-compressed
+	// application/x-gzip
+	// application/zip
+	// application/zip
+	// audio/mpeg
+	// binary/octet-stream
+	// image/bmp
+	// image/gif
+	// image/jpeg
+	// image/png
+	// image/svg+xml
+	// image/tiff
+	// text/plain
+	// text/rtf
+}
+
+func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key string, acl string, contentType string, ch chan<- string) {
 	defer wg.Done()
 	defer file.Close()
 	fileInfo, _ := file.Stat()
@@ -81,9 +141,11 @@ func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key
 
 	// Upload the file to S3.
 	result, errS3 := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(key),
-		Body:   bytes.NewReader(buffer),
+		Bucket:      aws.String(bucket),
+		Key:         aws.String(key),
+		Body:        bytes.NewReader(buffer),
+		ACL:         aws.String(acl),
+		ContentType: aws.String(contentType),
 	})
 	if errS3 != nil {
 		message = fmt.Sprintf("Failed to upload file, %v", errS3)

@@ -20,6 +20,7 @@ type Constructor struct {
 	IncludeBase bool
 	ConfigFile  string
 	Exclude     string
+	ACL         string
 	Session     *session.Session
 }
 
@@ -101,6 +102,15 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 		addkey := viper.Get("addkey")
 		if addkey != nil {
 			attr.AddKey = addkey.(string)
+		}
+	}
+
+	if attr.ACL == "" {
+		acl := viper.Get("acl")
+		if acl != nil {
+			attr.ACL = acl.(string)
+		} else {
+			attr.ACL = "public-read"
 		}
 	}
 
