@@ -40,7 +40,7 @@ func (id *Constructor) PushToS3() error {
 		if err != nil {
 			return err
 		}
-		if !id.IncludeBase {
+		if !id.IncludeBase && id.Directory != "./" || id.Directory != "." {
 			doc = RemoveBaseDir(doc, "/")
 		}
 
