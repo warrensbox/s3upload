@@ -1,6 +1,10 @@
-# s3uploader 
+[![Build Status](https://travis-ci.org/warrensbox/terraform-switcher.svg?branch=master)](https://travis-ci.org/warrensbox/terraform-switcher)
+[![Go Report Card](https://goreportcard.com/badge/github.com/warrensbox/terraform-switcher)](https://goreportcard.com/report/github.com/warrensbox/terraform-switcher)
+[![CircleCI](https://circleci.com/gh/warrensbox/terraform-switcher/tree/master.svg?style=shield&circle-token=55ddceec95ff67eb38269152282f8a7d761c79a5)](https://circleci.com/gh/warrensbox/terraform-switcher)
 
-<img style="text-allign:center" src="https://s3.us-east-2.amazonaws.com/kepler-images/s3upload/logo.png" alt="drawing" width="120" height="130"/>
+# s3uploader 
+                                    
+<img style="text-allign:center" src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/logo.png" alt="drawing" width="120" height="130"/>
 
 The `s3upload` command line tool lets you upload files to s3. 
 You have the option to provide a configuration file with s3 information and directory or provide the information as parameters on the command line.
@@ -36,7 +40,7 @@ Alternatively, you can install the binary from the source [here](https://github.
 
 ## How to use:
 ### Use command line to provide s3 config information
-<img align="center" src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/s3upload.gif" alt="drawing" style="width: 480px;"/>
+<img  src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/s3upload.gif" alt="drawing" style="width: 480px;"/>
 
 1.  Provide s3 configuration and directory to upload information.
 2.  For example, `s3upload -b bucketname.s3.com -d directorytoupload`.
@@ -46,7 +50,7 @@ Alternatively, you can install the binary from the source [here](https://github.
 The most recently selected versions are presented at the top of the dropdown.
 
 ### Use configuration file
-<img align="center" src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/s3upload-v4.gif" alt="drawing" style="width: 480px;"/>
+<img   src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/s3upload-v4.gif" alt="drawing" style="width: 480px;"/>
 
 1. You can also supply a configuration file with 
 2. For example, `s3upload -c locationOfConfigFile`. If you do not provide a config file, s3upload will look at the current directory.
