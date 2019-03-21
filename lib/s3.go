@@ -104,6 +104,10 @@ func getContentType(name string) string {
 		return "application/pdf"
 	case ".rtf":
 		return "text/rtf"
+	case ".doc":
+		return "application/msword"
+	case ".docx":
+		return "application/msword"
 	case ".mov":
 		return "video/quicktime"
 	default:
