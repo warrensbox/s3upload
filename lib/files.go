@@ -17,12 +17,12 @@ func Visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 		}
 
 		if _, ok := exclude[info.Name()]; ok == true {
-			fmt.Printf("SKIPPING FILE : %s\n", info.Name())
+			fmt.Printf("Skipping : %s\n", info.Name())
 			return nil
 		}
 
 		if info.IsDir() && info.Name() == ".git" {
-			fmt.Println("SKIPPING GIT DIRECTORY")
+			fmt.Println("Skipping .git files")
 			return filepath.SkipDir
 		}
 

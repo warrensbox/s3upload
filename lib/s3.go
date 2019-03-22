@@ -113,24 +113,6 @@ func getContentType(name string) string {
 	default:
 		return "binary/octet-stream"
 	}
-
-	// 		application/msword
-	// application/pdf
-	// application/vnd.android.package-archive
-	// application/x-compressed
-	// application/x-gzip
-	// application/zip
-	// application/zip
-	// audio/mpeg
-	// binary/octet-stream
-	// image/bmp
-	// image/gif
-	// image/jpeg
-	// image/png
-	// image/svg+xml
-	// image/tiff
-	// text/plain
-	// text/rtf
 }
 
 func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key string, acl string, contentType string, ch chan<- string) {
