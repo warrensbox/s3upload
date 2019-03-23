@@ -46,6 +46,8 @@ Alternatively, you can install the binary from the source [here](https://github.
 2.  For example, `s3upload -b bucketname.s3.com -d directorytoupload`.
 3.  Use the `-i` parameter to include the base directory.
 4.  Pass `-h` for more help. 
+5.  Pass `-r` for aws region. 
+6.  Pass `-b` for aws s3 bucket. 
 
 The most recently selected versions are presented at the top of the dropdown.
 
