@@ -45,7 +45,7 @@ func init() {
 		skipBaseDesc    = "Skip base directory"
 		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
 		directoryDesc   = "Directory where files are stored. Default is current directory"
-		bucketDesc      = "S3 bucket. Defaults are in config file"
+		bucketDesc      = "S3 bucket. Default bucket is in the config file"
 		keyDesc         = "Append key to s3 bucket. For example: key/my.files"
 		aclDesc         = "S3 acl description"
 		confDesc        = "S3 config info"

@@ -28,7 +28,7 @@ func TestConfiguration(t *testing.T) {
 	if profile.IncludeBase == false {
 		t.Logf("Include base: %t [expected]\n", profile.IncludeBase)
 	} else {
-		t.Errorf("Unincluded base: %t [unexpected]\n", profile.IncludeBase)
+		t.Errorf("Excluded base: %t [unexpected]\n", profile.IncludeBase)
 	}
 
 	if constructor.Directory == "../test" {
