@@ -76,12 +76,22 @@ func getContentType(name string) string {
 	switch name {
 	case ".ai":
 		return "application/postscript"
+	case ".js":
+		return "application/javascript"
+	case ".woff":
+		return "application/x-font-woff"
+	case ".eot":
+		return "application/vnd.ms-fontobject"
 	case ".png":
 		return "image/png"
 	case ".jpeg":
 		return "image/jpeg"
 	case ".jpg":
 		return "image/jpeg"
+	case ".html":
+		return "text/html"
+	case ".css":
+		return "text/css"
 	case ".gif":
 		return "image/gif"
 	case ".zip":
