@@ -88,6 +88,8 @@ func getContentType(name string) string {
 		return "image/jpeg"
 	case ".jpg":
 		return "image/jpeg"
+	case ".JPG":
+		return "image/jpeg"
 	case ".html":
 		return "text/html"
 	case ".css":
