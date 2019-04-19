@@ -122,6 +122,14 @@ func getContentType(name string) string {
 		return "application/msword"
 	case ".mov":
 		return "video/quicktime"
+	case ".mp4":
+		return "video/mp4"
+	case ".flv":
+		return "video/x-flv"
+	case ".ts":
+		return "video/MP2T"
+	case ".m3u8":
+		return "application/x-mpegURL"
 	default:
 		return "binary/octet-stream"
 	}
