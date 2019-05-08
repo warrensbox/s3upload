@@ -33,40 +33,121 @@ func (id *Constructor) PushToS3() error {
 	if err != nil {
 		panic(err)
 	}
-	ch := make(chan string)
 
-	for _, doc := range files {
-		wg.Add(1)
-		file, err := os.Open(doc)
-		if err != nil {
-			return err
+	//process files in batches
+	// ch := make(chan string)
+
+	fmt.Println(len(files))
+
+	batch := 20
+
+	for i := 0; i < len(files); i += batch {
+		j := i + batch
+		if j > len(files) {
+			j = len(files)
 		}
 
-		semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
+		//for _, doc := range files {
+		// wg.Add(1)
+		// file, err := os.Open(files[i])
+		// if err != nil {
+		// 	return err
+		// }
 
-		if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
-			doc = RemoveBaseDir(doc, "/")
+		// semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
+
+		// if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
+		// 	files[i] = RemoveBaseDir(files[i], "/")
+		// }
+
+		// if id.AddKey != "" {
+		// 	files[i] = fmt.Sprintf("%s/%s", id.AddKey, files[i])
+		// }
+
+		// ct := getContentType(filepath.Ext(files[i]))
+
+		// go pushingToS3(file, uploader, id.Bucket, files[i], id.ACL, ct, ch)
+		//}
+
+		//fmt.Println(i, j)
+
+		//fmt.Println(files[i:j]) // Process the batch.
+
+		ch := make(chan string)
+
+		for k := i; k < j; k++ {
+
+			fmt.Println("Processing batches ...")
+
+			fmt.Println(k)
+
+			wg.Add(1)
+			file, err := os.Open(files[k])
+			if err != nil {
+				return err
+			}
+
+			semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
+
+			if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
+				files[k] = RemoveBaseDir(files[k], "/")
+			}
+
+			if id.AddKey != "" {
+				files[k] = fmt.Sprintf("%s/%s", id.AddKey, files[k])
+			}
+
+			ct := getContentType(filepath.Ext(files[k]))
+
+			go pushingToS3(file, uploader, id.Bucket, files[k], id.ACL, ct, ch)
+
 		}
 
-		if id.AddKey != "" {
-			doc = fmt.Sprintf("%s/%s", id.AddKey, doc)
+		go func(ch chan<- string) {
+			defer close(ch)
+			wg.Wait()
+		}(ch)
+
+		for info := range ch {
+			fmt.Println(info)
 		}
 
-		ct := getContentType(filepath.Ext(doc))
-
-		go pushingToS3(file, uploader, id.Bucket, doc, id.ACL, ct, ch)
-	}
-
-	go func(ch chan<- string) {
-		defer close(ch)
 		wg.Wait()
-	}(ch)
 
-	for info := range ch {
-		fmt.Println(info)
 	}
 
-	wg.Wait()
+	// for _, doc := range files {
+	// 	wg.Add(1)
+	// 	file, err := os.Open(doc)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+
+	// 	semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
+
+	// 	if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
+	// 		doc = RemoveBaseDir(doc, "/")
+	// 	}
+
+	// 	if id.AddKey != "" {
+	// 		doc = fmt.Sprintf("%s/%s", id.AddKey, doc)
+	// 	}
+
+	// 	ct := getContentType(filepath.Ext(doc))
+
+	// 	go pushingToS3(file, uploader, id.Bucket, doc, id.ACL, ct, ch)
+	// }
+
+	// go func(ch chan<- string) {
+	// 	defer close(ch)
+	// 	wg.Wait()
+	// }(ch)
+
+	// for info := range ch {
+	// 	fmt.Println(info)
+	// }
+
+	// wg.Wait()
 
 	return nil
 }

@@ -118,6 +118,8 @@ func configuration(attr *Constructor, filename string, dirpath string) *Construc
 	secretAccessKey := viper.Get("aws_secret_access_key")
 	region := viper.Get("aws_region")
 
+	fmt.Println(region.(string))
+
 	if accessKey != nil && secretAccessKey != nil && region != nil {
 		sess, err := session.NewSession(&aws.Config{
 			Region:      aws.String(region.(string)),
