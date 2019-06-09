@@ -21,7 +21,8 @@ import (
 * 3- Checks if default s3config file exist
 * 4- Establishes S3 connection
 * 5- Push files to S3
- */
+#redude number of args
+*/
 
 var version = "0.1.2\n"
 
