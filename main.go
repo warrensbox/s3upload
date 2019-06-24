@@ -24,6 +24,8 @@ import (
 #redude number of args
 */
 
+//TODO fix aws region
+//upload to multiple buckets
 var version = "0.1.2\n"
 
 var (
