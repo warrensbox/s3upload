@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"sync"
 
@@ -39,7 +40,14 @@ func (id *Constructor) PushToS3() error {
 
 	fmt.Println(len(files))
 
-	batch := 20
+	cpu := runtime.NumCPU()
+
+	//os.Exit(0)
+	fmt.Println("Processing batches ...")
+
+	batch := (cpu / 2) * 10
+
+	batch = 20
 
 	for i := 0; i < len(files); i += batch {
 		j := i + batch
@@ -77,9 +85,9 @@ func (id *Constructor) PushToS3() error {
 
 		for k := i; k < j; k++ {
 
-			fmt.Println("Processing batches ...")
+			//fmt.Println("Processing batches ...")
 
-			fmt.Println(k)
+			//fmt.Println(k)
 
 			wg.Add(1)
 			file, err := os.Open(files[k])
