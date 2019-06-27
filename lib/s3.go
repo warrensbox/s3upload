@@ -47,47 +47,15 @@ func (id *Constructor) PushToS3() error {
 
 	batch := (cpu / 2) * 10
 
-	batch = 20
-
 	for i := 0; i < len(files); i += batch {
 		j := i + batch
 		if j > len(files) {
 			j = len(files)
 		}
 
-		//for _, doc := range files {
-		// wg.Add(1)
-		// file, err := os.Open(files[i])
-		// if err != nil {
-		// 	return err
-		// }
-
-		// semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
-
-		// if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
-		// 	files[i] = RemoveBaseDir(files[i], "/")
-		// }
-
-		// if id.AddKey != "" {
-		// 	files[i] = fmt.Sprintf("%s/%s", id.AddKey, files[i])
-		// }
-
-		// ct := getContentType(filepath.Ext(files[i]))
-
-		// go pushingToS3(file, uploader, id.Bucket, files[i], id.ACL, ct, ch)
-		//}
-
-		//fmt.Println(i, j)
-
-		//fmt.Println(files[i:j]) // Process the batch.
-
 		ch := make(chan string)
 
 		for k := i; k < j; k++ {
-
-			//fmt.Println("Processing batches ...")
-
-			//fmt.Println(k)
 
 			wg.Add(1)
 			file, err := os.Open(files[k])
