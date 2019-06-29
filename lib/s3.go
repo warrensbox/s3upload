@@ -35,14 +35,8 @@ func (id *Constructor) PushToS3() error {
 		panic(err)
 	}
 
-	//process files in batches
-	// ch := make(chan string)
-
-	fmt.Println(len(files))
-
 	cpu := runtime.NumCPU()
 
-	//os.Exit(0)
 	fmt.Println("Processing batches ...")
 
 	batch := (cpu / 2) * 10
@@ -91,39 +85,6 @@ func (id *Constructor) PushToS3() error {
 		wg.Wait()
 
 	}
-
-	// for _, doc := range files {
-	// 	wg.Add(1)
-	// 	file, err := os.Open(doc)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-
-	// 	semverRegex := regexp.MustCompile(`^\.\/\*$|^\.$|^\.\/$`)
-
-	// 	if !id.IncludeBase && !semverRegex.MatchString(id.Directory) {
-	// 		doc = RemoveBaseDir(doc, "/")
-	// 	}
-
-	// 	if id.AddKey != "" {
-	// 		doc = fmt.Sprintf("%s/%s", id.AddKey, doc)
-	// 	}
-
-	// 	ct := getContentType(filepath.Ext(doc))
-
-	// 	go pushingToS3(file, uploader, id.Bucket, doc, id.ACL, ct, ch)
-	// }
-
-	// go func(ch chan<- string) {
-	// 	defer close(ch)
-	// 	wg.Wait()
-	// }(ch)
-
-	// for info := range ch {
-	// 	fmt.Println(info)
-	// }
-
-	// wg.Wait()
 
 	return nil
 }
