@@ -56,15 +56,17 @@ func init() {
 		confDesc        = "S3 config info"
 	)
 
-	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
-	includeBase = kingpin.Flag("ignoreBase", skipBaseDesc).Short('i').Bool()
-	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
-	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
 	addkey = kingpin.Flag("addkey", keyDesc).Short('k').String()
 	acl = kingpin.Flag("acl", keyDesc).Short('a').String()
 	configFile = kingpin.Flag("config", confDesc).Short('c').String()
 	excludeFiles = kingpin.Flag("exclude", confDesc).Short('e').String()
+
+	versionFlag = kingpin.Flag("version", versionFlagDesc).Short('v').Bool()
+	includeBase = kingpin.Flag("ignoreBase", skipBaseDesc).Short('i').Bool()
+	awsRegion = kingpin.Flag("region", awsRegionDesc).Short('r').String()
+	directory = kingpin.Flag("directory", directoryDesc).Short('d').String()
+
 }
 
 func main() {
