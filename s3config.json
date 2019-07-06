@@ -1,6 +1,12 @@
 {
+  "test":  [{
     "source": "./",
     "bucket": "simple.s3.uploader",
     "exclude": "main,README.md",
     "addkey": "key"
+    },
+    {
+
+    }
+  ]
 }
