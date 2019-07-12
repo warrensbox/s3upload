@@ -44,9 +44,9 @@ func TestConfiguration(t *testing.T) {
 	}
 
 	if constructor.ConfigFile == "../test_config/s3config.json" {
-		t.Logf("Config file found: %s [expected]\n", constructor.ConfigFile)
+		t.Logf("Configuration file found: %s [expected]\n", constructor.ConfigFile)
 	} else {
-		t.Errorf("Config file not found: %s [unexpected]\n", constructor.ConfigFile)
+		t.Errorf("Configuration file not found: %s [unexpected]\n", constructor.ConfigFile)
 	}
 
 	if constructor.Exclude == "main,README.md" {
