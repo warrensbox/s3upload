@@ -49,7 +49,7 @@ func TestConfiguration(t *testing.T) {
 		t.Errorf("Configuration file not found: %s [unexpected]\n", constructor.ConfigFile)
 	}
 
-	if constructor.Exclude == "main,README.md" {
+	if constructor.Exclude == "main,README.md,s3upload" {
 		t.Logf("Excludes found: %s [expected]\n", constructor.ConfigFile)
 	} else {
 		t.Errorf("Excludes not found: %s [unexpected]\n", constructor.ConfigFile)
