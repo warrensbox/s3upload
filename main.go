@@ -69,6 +69,7 @@ func init() {
 
 }
 
+//need to use runner instead
 func main() {
 
 	kingpin.CommandLine.Interspersed(false)
