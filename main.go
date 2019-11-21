@@ -71,6 +71,7 @@ func init() {
 
 //need to use runner instead
 //use class type
+//switch kingpin
 func main() {
 
 	kingpin.CommandLine.Interspersed(false)
