@@ -161,7 +161,7 @@ func pushingToS3(file *os.File, uploader *s3manager.Uploader, bucket string, key
 	buffer := make([]byte, size)
 	file.Read(buffer)
 
-	message := "Uploading " + key
+	message := fmt.Sprintf("Uploading %s \n", key)
 
 	// Upload the file to S3.
 	result, errS3 := uploader.Upload(&s3manager.UploadInput{
