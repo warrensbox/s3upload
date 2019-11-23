@@ -28,6 +28,7 @@ import (
 //upload to multiple buckets
 //remove command line because you can use aws cli to do that
 //benefit of this is you can upload to multiple s3 buckets
+// move to multi upload
 var version = "0.1.2\n"
 
 var (
