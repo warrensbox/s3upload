@@ -50,10 +50,10 @@ func init() {
 		versionFlagDesc = "Displays the version of s3-pusher"
 		skipBaseDesc    = "Skip base directory"
 		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
-		directoryDesc   = "Directory where files are stored. Default is current directory"
+		directoryDesc   = "Directory where files are stored. Default - current directory"
 		bucketDesc      = "S3 bucket. Default bucket is in the config file"
 		keyDesc         = "Append key to s3 bucket. For example: key/my.files"
-		aclDesc         = "S3 acl description"
+		aclDesc         = "S3 ACL info"
 		confDesc        = "S3 config info"
 	)
 
