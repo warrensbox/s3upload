@@ -53,8 +53,8 @@ func init() {
 		directoryDesc   = "Directory where files are stored. Default - current directory"
 		bucketDesc      = "S3 bucket. Default bucket is in the config file"
 		keyDesc         = "Append key to s3 bucket. For example: key/my.files"
-		aclDesc         = "S3 ACL info"
-		confDesc        = "S3 config info"
+		aclDesc         = "S3 ACL information"
+		confDesc        = "S3 config information"
 	)
 
 	bucket = kingpin.Flag("bucket", bucketDesc).Short('b').String()
