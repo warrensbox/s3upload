@@ -47,7 +47,7 @@ var (
 func init() {
 
 	const (
-		versionFlagDesc = "Displays the version of s3-pusher"
+		versionFlagDesc = "Displays the version of S3Pusher"
 		skipBaseDesc    = "Skip base directory"
 		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
 		directoryDesc   = "Directory where files are stored. Default - current directory"
