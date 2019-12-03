@@ -17,7 +17,7 @@ You have the option to provide a configuration file with s3 information and dire
 
 ### Homebrew
 
-Installation for MacOS is the easiest with Homebrew. [If you do not have homebrew installed, click here](https://brew.sh/){:target="_blank"}. 
+Installation for MacOS is the easiest with Homebrew. If you do not have homebrew installed, [click here](https://brew.sh/){:target="_blank"}. 
 
 
 ```ruby
