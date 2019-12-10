@@ -49,7 +49,7 @@ func init() {
 	const (
 		versionFlagDesc = "Displays the version of S3Pusher"
 		skipBaseDesc    = "Skip base directory"
-		awsRegionDesc   = "Provide AWS Region. Default is us-east-1"
+		awsRegionDesc   = "Provide AWS Region. Default - us-east-1"
 		directoryDesc   = "Directory where files are stored. Default - current directory"
 		bucketDesc      = "S3 bucket. Default bucket is in the config file"
 		keyDesc         = "Append key to s3 bucket. For example: key/my.files"
