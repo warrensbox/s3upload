@@ -94,8 +94,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 		//move to lib
-	} else {
-		fmt.Println("Upload successful")
 	}
 
 }
