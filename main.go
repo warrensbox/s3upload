@@ -90,8 +90,6 @@ func main() {
 	profile := lib.NewConstructor(construct)
 
 
-	fmt.Println(construct)
-
 	err := profile.PushToS3()
 
 	if err != nil {
