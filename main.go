@@ -89,7 +89,6 @@ func main() {
 	construct := &lib.Constructor{*directory, *bucket, *addkey, *includeBase, *configFile, *excludeFiles, *acl, session}
 	profile := lib.NewConstructor(construct)
 
-	fmt.Println(construct)
 
 	err := profile.PushToS3()
 
