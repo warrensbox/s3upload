@@ -27,6 +27,7 @@ func Visit(files *[]string, exclude map[string]struct{}) filepath.WalkFunc {
 		}
 
 		if info.IsDir() {
+			fmt.Println("Is dir")
 			return nil
 		}
 
