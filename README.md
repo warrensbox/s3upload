@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/warrensbox/terraform-switcher)](https://goreportcard.com/report/github.com/warrensbox/terraform-switcher)
 [![CircleCI](https://circleci.com/gh/warrensbox/terraform-switcher/tree/master.svg?style=shield&circle-token=55ddceec95ff67eb38269152282f8a7d761c79a5)](https://circleci.com/gh/warrensbox/terraform-switcher)
 
-# s3uploader - Need further development - Open for MR
+# s3uploader - Need further development - Open for MR - No longer maintained
                                     
 <img style="text-allign:center" src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/s3upload/logo.png" alt="drawing" width="120" height="130"/>
 
