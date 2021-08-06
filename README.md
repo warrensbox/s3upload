@@ -72,7 +72,7 @@ Config json file should be named `s3config.json` and be placed in the root direc
 
 Please open  *issues* here: [New Issue](https://github.com/warrensbox/s3upload/issues){:target="_blank"}
 
-<hr>
+
 
 See how to *upgrade*, *uninstall*, *troubleshoot* here:
 [Additional Info](additional)
